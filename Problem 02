@@ -1,0 +1,103 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+namespace P02Exam27022021
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            List<string> input = Console.ReadLine()
+                  .Split("|", StringSplitOptions.RemoveEmptyEntries)
+                  .ToList();
+
+            string command = Console.ReadLine();
+            while (true)
+            {
+                if (command=="Done")
+                {
+                    break;
+                }
+
+
+                string[] tokken = command.Split(" ", StringSplitOptions.RemoveEmptyEntries);
+
+                switch (tokken[0])
+                {
+                    case "Move":
+                        int index = 0;
+                        switch (tokken[1])
+                        {
+                            case "Left":
+                                index = int.Parse(tokken[2]);
+                                if (index < 0 || index >= input.Count)
+                                {
+                                    break;
+                                }
+                                if (index - 1 < 0)
+                                {
+                                    break;
+                                }
+
+                                string secondIndex = input[index - 1];
+                                input[index - 1] = input[index];
+                                input[index] = secondIndex;
+                                break;
+                            case "Right":
+                                index = int.Parse(tokken[2]);
+                                if (index < 0 || index >= input.Count)
+                                {
+                                    break;
+                                }
+                                if (index + 1 >= input.Count)
+                                {
+                                    break;
+                                }
+                                secondIndex = input[index + 1];
+                                input[index + 1] = input[index];
+                                input[index] = secondIndex;
+                                break;
+
+                        }
+                        break;
+                    case "Check":
+                        switch (tokken[1])
+                        {
+                            case "Even":
+                                for (int i = 0; i < input.Count; i++)
+                                {
+                                    if (i % 2 == 0)
+                                    {
+                                        Console.Write($"{input[i]} ");
+                                    }
+                                }
+                                Console.WriteLine();
+                                break;
+                            case "Odd":
+                                for (int i = 0; i < input.Count; i++)
+                                {
+                                    if (i % 2 != 0)
+                                    {
+                                        Console.Write($"{input[i]} ");
+                                    }
+                                }
+                                Console.WriteLine();
+                                break;
+                            default:
+                                break;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+
+                command = Console.ReadLine();
+            }
+
+            Console.WriteLine($"You crafted {string.Join("", input)}!");
+        }
+
+
+
+    } 
